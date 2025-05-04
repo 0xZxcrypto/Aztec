@@ -210,7 +210,7 @@ SYNC_PROOF=$(curl -s -X POST -H 'Content-Type: application/json' \
 
 if [ -z "$SYNC_PROOF" ] || [ "$SYNC_PROOF" = "null" ]; then
     echo "Error: Failed to generate sync proof. Check node status."
-    echo "To view logs, run: tmux attach -t aztec"
+    echo "To view logs, run: tmux attach -t AZTEC"
     exit 1
 fi
 
