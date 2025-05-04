@@ -21,7 +21,7 @@ Aztec is building a decentralized, privacy-focused network and the sequencer nod
 ### 📥 Installation
 
 ```
-curl -O https://raw.githubusercontent.com/hnfdm/sh/main/aztec-sequencer.sh && chmod +x aztec-sequencer.sh && ./aztec-sequencer.sh
+curl -O https://raw.githubusercontent.com/0xZxCrypto/sh/main/Aztec.sh && chmod +x Aztec.sh && ./Aztec.sh
 ```
 
 ### 🧩 Post-Installation
