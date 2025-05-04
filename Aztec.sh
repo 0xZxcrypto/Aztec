@@ -3,6 +3,7 @@
 # setup_aztec.sh
 # Script to set up Aztec Sequencer node with dependencies, Docker, firewall configuration,
 # retrieve block number and sync proof, handle PATH for Aztec tools, and auto-confirm firewall prompts
+# Uses $HOME for flexibility across different users
 
 # Exit on any error
 set -e
@@ -11,6 +12,9 @@ set -e
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
+
+# Set Aztec directory using $HOME
+AZTEC_DIR="$HOME/.aztec/bin"
 
 # Prompt for required inputs with descriptive names
 echo "Please provide the following details:"
@@ -78,13 +82,13 @@ fi
 echo "Installing Aztec Tools..."
 bash -i <(curl -s https://install.aztec.network) <<< "y"  # Auto-confirm PATH prompt
 
-# Add /home/ubuntu/.aztec/bin to PATH in both .bashrc and .bash_profile
-echo "Adding /home/ubuntu/.aztec/bin to PATH..."
-if ! grep -q "/home/ubuntu/.aztec/bin" ~/.bashrc; then
-    echo "export PATH=\$PATH:/home/ubuntu/.aztec/bin" >> ~/.bashrc
+# Add $HOME/.aztec/bin to PATH in both .bashrc and .bash_profile
+echo "Adding $AZTEC_DIR to PATH..."
+if ! grep -q "$AZTEC_DIR" ~/.bashrc; then
+    echo "export PATH=\$PATH:$AZTEC_DIR" >> ~/.bashrc
 fi
-if ! grep -q "/home/ubuntu/.aztec/bin" ~/.bash_profile; then
-    echo "export PATH=\$PATH:/home/ubuntu/.aztec/bin" >> ~/.bash_profile
+if ! grep -q "$AZTEC_DIR" ~/.bash_profile; then
+    echo "export PATH=\$PATH:$AZTEC_DIR" >> ~/.bash_profile
 fi
 
 # Source both files to apply PATH changes
@@ -96,9 +100,9 @@ echo "Verifying Aztec installation..."
 if command_exists aztec; then
     echo "Aztec installed successfully. Version: $(aztec --version)"
 else
-    echo "Error: Aztec installation failed or /home/ubuntu/.aztec/bin is not in PATH."
-    echo "Manually verify the installation directory: ls -la /home/ubuntu/.aztec/bin"
-    echo "Manually add PATH by running: echo 'export PATH=\$PATH:/home/ubuntu/.aztec/bin' >> ~/.bash_profile && source ~/.bash_profile"
+    echo "Error: Aztec installation failed or $AZTEC_DIR is not in PATH."
+    echo "Manually verify the installation directory: ls -la $AZTEC_DIR"
+    echo "Manually add PATH by running: echo 'export PATH=\$PATH:$AZTEC_DIR' >> ~/.bash_profile && source ~/.bash_profile"
     exit 1
 fi
 
